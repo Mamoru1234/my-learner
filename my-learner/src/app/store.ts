@@ -1,7 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { pagesReducer } from '../pages/pages.reducer';
+import logger from 'redux-logger'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    pages: pagesReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(logger),
 });
 
 export type AppDispatch = typeof store.dispatch;
