@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RootPage } from './pages/root';
 import { MainPage } from './pages/main/main';
 import { ErrorPage } from './pages/error';
@@ -24,11 +24,7 @@ const router = createBrowserRouter([
         path: '/',
         element: <MainPage/>
       },
-      {
-        path: '/dictionaries',
-        element: <Outlet/>,
-        children: dictionaryRoutes,
-      },
+      ...dictionaryRoutes,
       {
         path: '/words/new',
         element: <NewWordPage/>

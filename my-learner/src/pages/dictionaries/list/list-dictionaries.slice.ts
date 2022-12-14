@@ -1,34 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { DictionaryEntity } from "../../../store/entities/dictionary.entity";
 import { dictionaryRepository } from "../../../store/repositories/dictionary.repository";
-
-export enum FetchState {
-  IDLE = 'IDLE',
-  LOADING = 'LOADING',
-  LOADED = 'LOADED',
-  FAILED = 'FAILED',
-}
-
-export interface IdleData {
-  state: FetchState.IDLE;
-}
-
-export interface LoadingData {
-  state: FetchState.LOADING;
-}
-
-export interface LoadedData<T> {
-  state: FetchState.LOADED;
-  data: T;
-}
-
-export interface FailedData {
-  state: FetchState.FAILED;
-  err: any;
-}
-
-export type FetchData<T> = IdleData | LoadingData | LoadedData<T> | FailedData;
-
+import { FetchData, FetchState } from "../../../utils/fetch.utils";
 export interface ListDictionariesPageState {
   dictionariesData: FetchData<DictionaryEntity[]>;
 };
@@ -40,6 +13,11 @@ const initialState: ListDictionariesPageState = {
 };
 
 export const loadDictionaries = createAsyncThunk('pages/dictionaries/list/loadDictionaries', () => dictionaryRepository.getAll());
+
+export const deleteDictionary = createAsyncThunk('pages/dictionaries/list/deleteDictionary', async (id: string, { dispatch }) => {
+  await dictionaryRepository.delete(id);
+  return dispatch(loadDictionaries());
+});
 
 export const listDictionariesSlice = createSlice({
   name: 'pages/dictionaries/list',

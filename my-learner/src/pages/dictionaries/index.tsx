@@ -10,5 +10,5 @@ export const dictionaryRoutes: RouteObject[] = [
   {
     path: '/dictionaries/new',
     element: <NewDictionaryPage/>
-  }
+  },
 ];

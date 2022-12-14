@@ -1,9 +1,14 @@
-import { useEffect } from "react";
+import { Container, IconButton, List, ListItem, ListItemText } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useCallback, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../app/store";
+import { MyAppBar } from "../../../components/MyAppBar";
 import { DictionaryEntity } from "../../../store/entities/dictionary.entity";
-import { FetchState, loadDictionaries } from "./list-dictionaries.slice";
+import { loadDictionaries } from "./list-dictionaries.slice";
+import { DictionaryListItem } from "./dictionary-list-item";
+import { FetchState } from "../../../utils/fetch.utils";
 
 const mapState = (state: RootState) => ({
   dictionaries: state.pages.dictionaries.list.dictionariesData,
@@ -22,9 +27,9 @@ function DictionariesList(dictionaries: DictionaryEntity[]) {
     return (<div>No dictionaries</div>);
   }
   return (
-    <div>
-      {dictionaries.map((it) => (<div key={it.id}>{it.name}</div>))}
-    </div>
+    <List>
+      {dictionaries.map((it) => (<DictionaryListItem {...it} key={it.id}/>))}
+    </List>
   );
 }
 
@@ -41,11 +46,14 @@ function ListDictionariesComponent({ loadDictionaries, dictionaries }: PropsFrom
     return (<div>Failed to load dictionaries</div>);
   }
   return (
-    <div>
-      <div>List dictionaries</div>
-      {DictionariesList(dictionaries.data)}
-      <div><Link to="/dictionaries/new">New dictionary</Link></div>
-    </div>
+    <Container maxWidth='sm'>
+      <MyAppBar/>
+      <div>
+        <div>List dictionaries</div>
+          {DictionariesList(dictionaries.data)}
+        <div><Link to="/dictionaries/new">New dictionary</Link></div>
+      </div>
+    </Container>
   );
 }
 

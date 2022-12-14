@@ -16,6 +16,11 @@ export const dictionaryRepository = {
     };
   },
 
+  async delete(id: string): Promise<void> {
+    const db = await openDbResult;
+    await db.delete('dictionaries', id);
+  },
+
   async getAll(): Promise<DictionaryEntity[]> {
     const db = await openDbResult;
     return db.getAll('dictionaries');
