@@ -1,6 +1,5 @@
-import { Container, IconButton, List, ListItem, ListItemText } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useCallback, useEffect } from "react";
+import { Container, List } from "@mui/material";
+import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../app/store";
