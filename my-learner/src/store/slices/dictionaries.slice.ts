@@ -1,20 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DictionaryEntity } from "../../../store/entities/dictionary.entity";
-import { dictionaryRepository } from "../../../store/repositories/dictionary.repository";
-import { FetchData, FetchState } from "../../../utils/fetch.utils";
+import { RootState } from "../../app/store";
+import { FetchData, FetchState } from "../../utils/fetch.utils";
+import { DictionaryEntity } from "../entities/dictionary.entity";
+import { dictionaryRepository } from "../repositories/dictionary.repository";
 
-const sliceName = 'pages/dictionaries/list';
+const sliceName = 'store/dictionaries';
 
-export interface ListDictionariesPageState {
-  dictionariesData: FetchData<DictionaryEntity[]>;
-};
+export interface DictionariesStoreState {
+  dictionaries: FetchData<DictionaryEntity[]>;
+}
 
-const initialState: ListDictionariesPageState = {
-  dictionariesData: {
+const initialState: DictionariesStoreState = {
+  dictionaries: {
     state: FetchState.IDLE,
   },
 };
-
 export const loadDictionaries = createAsyncThunk(`${sliceName}/loadDictionaries`, () => dictionaryRepository.getAll());
 
 export const deleteDictionary = createAsyncThunk(`${sliceName}/deleteDictionary`, async (id: string, { dispatch }) => {
@@ -22,24 +22,26 @@ export const deleteDictionary = createAsyncThunk(`${sliceName}/deleteDictionary`
   return dispatch(loadDictionaries());
 });
 
-export const listDictionariesSlice = createSlice({
+export const dictionariesSelector = (state: RootState) => state.store.dictionaries.dictionaries;
+
+export const dictionariesSlice = createSlice({
   name: sliceName,
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loadDictionaries.pending, (state) => {
-      state.dictionariesData = {
+      state.dictionaries = {
         state: FetchState.LOADING,
       };
     });
     builder.addCase(loadDictionaries.fulfilled, (state, action) => {
-      state.dictionariesData = {
+      state.dictionaries = {
         state: FetchState.LOADED,
         data: action.payload,
       };
     });
     builder.addCase(loadDictionaries.rejected, (state, action) => {
-      state.dictionariesData = {
+      state.dictionaries = {
         state: FetchState.FAILED,
         err: action.error,
       };

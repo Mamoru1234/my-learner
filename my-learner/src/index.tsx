@@ -8,8 +8,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RootPage } from './pages/root';
 import { MainPage } from './pages/main/main';
 import { ErrorPage } from './pages/error';
-import { NewWordPage } from './pages/new-word/new-word';
 import { dictionaryRoutes } from './pages/dictionaries';
+import { wordsRoutes } from './pages/words';
+import { SettingsPage } from './pages/settings/settings.page';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -24,11 +25,12 @@ const router = createBrowserRouter([
         path: '/',
         element: <MainPage/>
       },
-      ...dictionaryRoutes,
       {
-        path: '/words/new',
-        element: <NewWordPage/>
+        path: '/settings',
+        element: <SettingsPage/>,
       },
+      ...dictionaryRoutes,
+      ...wordsRoutes,
     ],
   },
 ]);

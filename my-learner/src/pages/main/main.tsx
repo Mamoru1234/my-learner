@@ -12,7 +12,10 @@ export function MainPage() {
             <Link to = '/dictionaries/list'>Dictionaries</Link>
           </div>
           <div>
-            <Link to = '/words/new'>New word</Link>
+            <Link to = '/words/list'>Words</Link>
+          </div>
+          <div>
+            <Link to = '/settings'>Settings</Link>
           </div>
         </Paper>
       </Box>

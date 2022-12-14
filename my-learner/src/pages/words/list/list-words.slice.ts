@@ -1,15 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DictionaryEntity } from "../../../store/entities/dictionary.entity";
 import { dictionaryRepository } from "../../../store/repositories/dictionary.repository";
 import { FetchData, FetchState } from "../../../utils/fetch.utils";
 
-const sliceName = 'pages/dictionaries/list';
+const sliceName = 'pages/words/list';
 
-export interface ListDictionariesPageState {
+export interface ListWordsPageState {
+  selectedDictionary?: string;
   dictionariesData: FetchData<DictionaryEntity[]>;
-};
+}
 
-const initialState: ListDictionariesPageState = {
+const initialState: ListWordsPageState = {
   dictionariesData: {
     state: FetchState.IDLE,
   },
@@ -17,15 +18,14 @@ const initialState: ListDictionariesPageState = {
 
 export const loadDictionaries = createAsyncThunk(`${sliceName}/loadDictionaries`, () => dictionaryRepository.getAll());
 
-export const deleteDictionary = createAsyncThunk(`${sliceName}/deleteDictionary`, async (id: string, { dispatch }) => {
-  await dictionaryRepository.delete(id);
-  return dispatch(loadDictionaries());
-});
-
-export const listDictionariesSlice = createSlice({
+export const listWordsSlice = createSlice({
   name: sliceName,
   initialState,
-  reducers: {},
+  reducers: {
+    selectDictionary: (state, action: PayloadAction<string>) => {
+      state.selectedDictionary = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loadDictionaries.pending, (state) => {
       state.dictionariesData = {
@@ -44,5 +44,7 @@ export const listDictionariesSlice = createSlice({
         err: action.error,
       };
     });
-  },
+  }
 });
+
+export const selectDictionary = listWordsSlice.actions.selectDictionary;

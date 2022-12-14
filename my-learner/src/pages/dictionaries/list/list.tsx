@@ -1,4 +1,4 @@
-import { Container, List } from "@mui/material";
+import { Container, List, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
@@ -48,7 +48,9 @@ function ListDictionariesComponent({ loadDictionaries, dictionaries }: PropsFrom
     <Container maxWidth='sm'>
       <MyAppBar/>
       <div>
-        <div>List dictionaries</div>
+        <Typography variant="h5">
+          List dictionaries
+        </Typography>
           {DictionariesList(dictionaries.data)}
         <div><Link to="/dictionaries/new">New dictionary</Link></div>
       </div>

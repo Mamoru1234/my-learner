@@ -1,6 +1,6 @@
 import { Box, Button, Container } from "@mui/material";
-import { MyAppBar } from "../../components/MyAppBar";
-import { wordsRepository } from "../../store/repositories/words.repository";
+import { MyAppBar } from "../../../components/MyAppBar";
+import { wordsRepository } from "../../../store/repositories/words.repository";
 
 function onClick() {
   wordsRepository.insert().then(() => console.log('Insert completed')).catch((e) => console.log(e));
