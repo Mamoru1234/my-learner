@@ -3,8 +3,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useCallback } from "react";
 import { DictionaryEntity } from "../../../store/entities/dictionary.entity";
-import { deleteDictionary } from "./list-dictionaries.slice";
 import { connect, ConnectedProps } from "react-redux";
+import { deleteDictionary } from "../../../store/slices/dictionaries.slice";
 
 const mapDispatchToProps = {
   deleteDictionary,

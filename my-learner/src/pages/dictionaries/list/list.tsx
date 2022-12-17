@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { RootState } from "../../../app/store";
 import { MyAppBar } from "../../../components/MyAppBar";
 import { DictionaryEntity } from "../../../store/entities/dictionary.entity";
-import { loadDictionaries } from "./list-dictionaries.slice";
 import { DictionaryListItem } from "./dictionary-list-item";
 import { FetchState } from "../../../utils/fetch.utils";
+import { loadDictionaries } from "../../../store/slices/dictionaries.slice";
 
 const mapState = (state: RootState) => ({
-  dictionaries: state.pages.dictionaries.list.dictionariesData,
+  dictionaries: state.store.dictionaries.dictionaries,
 });
 
 const mapDispatchToProps = {

@@ -1,9 +1,14 @@
 import { openDbResult } from "../db.setup";
+import { WordEntity } from "../entities/word.entity";
 
 export const wordsRepository = {
-  async insert() {
+  async insert(word: WordEntity) {
     const db = await openDbResult;
-    const allWords = await db.getAllFromIndex('words', 'by-dictionary', 'test');
-    console.log(allWords);
+    await db.add('words', word);
+  },
+
+  async getByDictionary(dictionaryId: string): Promise<WordEntity[]> {
+    const db = await openDbResult;
+    return db.getAllFromIndex('words', 'by-dictionary', dictionaryId);
   },
 };
